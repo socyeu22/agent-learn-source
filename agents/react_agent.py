@@ -33,13 +33,14 @@ def run_react_agent(task: str, tools: dict, max_iterations: int = 10) -> str:
 
         print(f"\n--- Iteration {i + 1} ---\n{llm_output}")
 
-        # Nếu LLM đã có đủ thông tin và đưa ra kết luận cuối cùng, dừng vòng lặp
-        if "Final Answer:" in llm_output:
-            final = re.search(r"Final Answer:\s*(.+)", llm_output)
-            return final.group(1).strip() if final else llm_output
-
         # Dùng parse_action để trích xuất tên tool và input từ output của LLM
+        # Check Action TRƯỚC — nếu có cả Action lẫn Final Answer thì ưu tiên thực thi tool
         action, action_input = parse_action(llm_output)
+
+        # Chỉ accept Final Answer khi không có Action nào để thực thi
+        if not action and "Final Answer:" in llm_output:
+            final = re.search(r"Final Answer:\s*(.+(?:\n.+)*)", llm_output, re.MULTILINE)
+            return final.group(1).strip() if final else llm_output
 
         # Nếu không parse được action, inject lỗi như một Observation để LLM tự sửa format
         # (thay vì dừng cứng — LLM đôi khi viết text thừa hoặc xuống dòng giữa Action/Action Input)

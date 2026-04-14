@@ -3,13 +3,10 @@ from agents.react_agent import run_react_agent
 from tools.basic_tools import TOOLS
 
 questions = [
-    "Bây giờ là mấy giờ?",
-    "Tính 15% của 2500000",
-    "Từ ngày 1/1/2026 đến hôm nay là bao nhiêu ngày?",
+    "Nếu tôi tiết kiệm 500,000 VND/tháng từ hôm nay, sau 2 năm tôi có bao nhiêu?",
 ]
 
 for q in questions:
     print(f"\n{'='*50}")
     print(f"Task: {q}")
-    result = run_react_agent(q, TOOLS)
-    print(f"Final Answer: {result}")
+    run_react_agent(q, TOOLS)
