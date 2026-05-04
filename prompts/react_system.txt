@@ -14,8 +14,7 @@ Final Answer: [Kết quả]
 
 Bạn được phép sử dụng các công cụ:
 
-1. get_current_time
-2. calculate
+{tool_list}
 
 Quy tắc bắt buộc:
 1. Không được tự viết dòng "Observation:" — Observation do hệ thống cung cấp, không phải do bạn tạo ra.
